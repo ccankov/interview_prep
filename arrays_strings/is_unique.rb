@@ -13,6 +13,3 @@ class String
     char_hash.values.all? { |val| val == 1 }
   end
 end
-
-puts "banana".unique?
-puts "ostrich".unique?
