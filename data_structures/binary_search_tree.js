@@ -66,6 +66,10 @@ class BinarySearchTree {
     this.findNode = this.findNode.bind(this);
     this.find = this.find.bind(this);
     this.insert = this.insert.bind(this);
+    this.delete = this.delete.bind(this);
+    this.traverseInOrder = this.traverseInOrder.bind(this);
+    this.traversePreOrder = this.traversePreOrder.bind(this);
+    this.traversePostOrder = this.traversePostOrder.bind(this);
   }
 
   findNode(target, searchNode = this.root) {
@@ -126,5 +130,38 @@ class BinarySearchTree {
     }
 
     return targetNode;
+  }
+
+  traverseInOrder(node = this.root, traversalResult = []) {
+    if (node.left) {
+      this.traverseInOrder(node.left, traversalResult);
+    }
+    traversalResult.push(node.value);
+    if (node.right) {
+      this.traverseInOrder(node.right, traversalResult);
+    }
+    return traversalResult;
+  }
+
+  traversePreOrder(node = this.root, traversalResult = []) {
+    traversalResult.push(node.value);
+    if (node.left) {
+      this.traversePreOrder(node.left, traversalResult);
+    }
+    if (node.right) {
+      this.traversePreOrder(node.right, traversalResult);
+    }
+    return traversalResult;
+  }
+
+  traversePostOrder(node = this.root, traversalResult = []) {
+    if (node.left) {
+      this.traversePostOrder(node.left, traversalResult);
+    }
+    if (node.right) {
+      this.traversePostOrder(node.right, traversalResult);
+    }
+    traversalResult.push(node.value);
+    return traversalResult;
   }
 }
