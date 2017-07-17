@@ -13,14 +13,14 @@ class Node {
     // Node is a leaf
     if (!(this.left || this.right)) {
       // Leaf node has no parent - return null to replace this node as root
-      if (!parent) {
+      if (!this.parent) {
         return null;
       }
       // Leaf node has a parent - replace this node with null on parent
-      if (parent.value < this.value) {
-        parent.right = null;
+      if (this.parent.value < this.value) {
+        this.parent.right = null;
       } else {
-        parent.left = null;
+        this.parent.left = null;
       }
     }
     // Node has one child
@@ -32,10 +32,10 @@ class Node {
       }
 
       // Node has a parent - replace current node with its child
-      if (parent.value < this.value) {
-        parent.right = child;
+      if (this.parent.value < this.value) {
+        this.parent.right = child;
       } else {
-        parent.left = child;
+        this.parent.left = child;
       }
     }
     // Node has two children
