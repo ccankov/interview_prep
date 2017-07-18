@@ -40,8 +40,8 @@ class Graph {
     visited[node] = true;
 
     node.children.forEach(child => {
-      if (!visited[node]) {
-        this.dfsSearch(node);
+      if (!visited[child]) {
+        this.dfsSearch(child);
       }
     });
   }
