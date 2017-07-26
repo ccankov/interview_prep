@@ -5,6 +5,62 @@ class Node {
     this.left = left;
     this.right = right;
   }
+
+  delete() {
+    if (!(this.left || this.right)) {
+      // No children
+      return this.deleteWithNoChildren();
+    } else if (this.left ? !this.right : this.right) {
+      // One child
+      return this.deleteWithOneChild();
+    } else {
+      // Two children
+      return this.deleteWithTwoChildren();
+    }
+  }
+
+  deleteWithNoChildren() {
+    if (this.parent) {
+      if (this.parent.value >= this.value) {
+        this.parent.left = null;
+      } else {
+        this.parent.right = null;
+      }
+    } else {
+      // This is the only node in the tree - replace it with null
+      return null;
+    }
+  }
+
+  deleteWithOneChild() {
+    let child = this.left || this.right;
+
+    if (this.parent) {
+      child.parent = this.parent;
+      if (this.parent.value >= this.value) {
+        this.parent.left = child;
+      } else {
+        this.parent.right = child;
+      }
+    } else {
+      // Deleting root node with one child - replace it by its child
+      child.parent = null;
+      return child;
+    }
+  }
+
+  deleteWithTwoChildren() {
+    let maxNode = this.left;
+
+    while (maxNode.right) {
+      maxNode = maxNode.right;
+    }
+
+    this.value = maxNode.value;
+    maxNode.delete();
+
+    return this;
+  }
 }
 
 class BinarySearchTree {
@@ -63,6 +119,23 @@ class BinarySearchTree {
     }
 
     return newNode;
+  }
+
+  delete(target) {
+    let targetNode = this.findNode(target);
+
+    if (targetNode.found) {
+      let nodeToDelete = targetNode.node;
+      let replacementNode = nodeToDelete.delete();
+
+      if (nodeToDelete === this.root) {
+        this.root = replacementNode;
+      }
+
+      return nodeToDelete;
+    }
+
+    return null;
   }
 
   traverseInOrder(currentNode = this.root, values = []) {
